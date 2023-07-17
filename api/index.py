@@ -20,7 +20,7 @@ def load_from_file():
     with open('save.txt', 'rb') as f:
         pixels = pickle.load(f)
 
-load_from_file()
+#load_from_file()
 
 def background_task():
     while True:
