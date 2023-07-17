@@ -59,7 +59,7 @@ function start() {
   }
 
   picture = document.createElement('img');
-  picture.src = "static/colors.png"
+  picture.src = "colors.png"
   document.body.appendChild(picture)
   update();
 }
