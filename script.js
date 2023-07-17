@@ -36,7 +36,7 @@ chars = [
   "p",
 ];
 
-server_ip = 'http://hotncold.ddns.net:8080'
+server_ip = 'http://roboplace.vercel.app'
 
 function start() {
   display_div = document.createElement("div");

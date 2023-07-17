@@ -10,24 +10,6 @@ import os
 
 pixels = [[0 for i in range(100)] for j in range(100)]
 
-def save_to_file():
-    global pixels
-    with open('save.txt', 'wb') as f:
-        pickle.dump(pixels, f)
-
-def load_from_file():
-    global pixels
-    with open('save.txt', 'rb') as f:
-        pixels = pickle.load(f)
-
-#load_from_file()
-
-def background_task():
-    while True:
-        #print('saved')
-        save_to_file()
-        time.sleep(60)
-
 chars = ["a", "b", "c", "d", "e", "f", "g", "h",
          "i", "j", "k", "l", "m", "n", "o", "p",]
 
@@ -93,6 +75,4 @@ def handle_incoming():
 
 
 if __name__ == '__main__':
-    bg_thread = Thread(target=background_task)
-    bg_thread.start()
     app.run()
