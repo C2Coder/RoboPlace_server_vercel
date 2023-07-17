@@ -36,7 +36,7 @@ chars = [
   "p",
 ];
 
-server_ip = 'http://roboplace.vercel.app'
+server_ip = 'https://roboplace.vercel.app'
 
 function start() {
   display_div = document.createElement("div");
