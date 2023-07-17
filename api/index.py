@@ -43,7 +43,7 @@ CORS(app)
 
 @app.route('/', methods=['GET'])
 def main_page_response():
-    with open("static/index.htm") as index_file:
+    with open("index.htm") as index_file:
         return index_file.read()
 
 
@@ -87,5 +87,4 @@ def handle_incoming():
 if __name__ == '__main__':
     bg_thread = Thread(target=background_task)
     bg_thread.start()
-    app.static_folder = 'static'
     app.run()
