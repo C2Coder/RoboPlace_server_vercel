@@ -64,9 +64,8 @@ function start() {
   update();
 }
 
-async function fetch_data(section) {
-  const url =
-    server_ip+"/get_pixels?section=" + String(section);
+async function fetch_data() {
+  const url =server_ip+"/get_pixels";
   const response = await fetch(url);
   fetched_data = await response.text();
   return fetched_data;
@@ -75,36 +74,12 @@ async function fetch_data(section) {
 raw_pixels = "";
 function update() {
   raw_pixels = "";
-  setTimeout(function() {
-    fetch_data(0).then((result) => {
+
+    fetch_data().then((result) => {
       // Process the result here
-      raw_pixels = raw_pixels + result;
+      raw_pixels = result;
     });
-  }, 100);
-  setTimeout(function() {
-    fetch_data(1).then((result) => {
-      // Process the result here
-      raw_pixels = raw_pixels + result;
-    });
-  }, 200);
-  setTimeout(function() {
-    fetch_data(2).then((result) => {
-      // Process the result here
-      raw_pixels = raw_pixels + result;
-    });
-  }, 300);
-  setTimeout(function() {
-    fetch_data(3).then((result) => {
-      // Process the result here
-      raw_pixels = raw_pixels + result;
-    });
-  }, 400);
-  setTimeout(function() {
-    fetch_data(4).then((result) => {
-      // Process the result here
-      raw_pixels = raw_pixels + result;
-    });
-  }, 500);
+
   
   setTimeout(function() {
     //console.log(raw_pixels);
@@ -112,10 +87,8 @@ function update() {
     pixels = document.getElementsByClassName('pixel');
     for (let index = 0; index < 10000; index++) {
       pixels[index].style.backgroundColor = colors[chars.indexOf(raw_pixels[index])]
-      
     }
     raw_pixels = ""
-  }, 1000);
-  setTimeout(update, 5000);
+  }, 5000);
+  setTimeout(update, 10000);
 }
-

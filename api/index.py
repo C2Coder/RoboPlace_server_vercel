@@ -5,6 +5,8 @@ from flask_cors import CORS
 import pickle
 from threading import Thread
 import time
+import os
+
 
 pixels = [[0 for i in range(100)] for j in range(100)]
 
@@ -52,12 +54,9 @@ def main_page_response():
 @app.route('/get_pixels', methods=['GET'])
 def handle_request():
     if request.method == 'GET':
-        args = dict(request.args)
         #print(dict(args))
-        section = args["section"]
-        ranges = [[0, 20], [20, 40], [40, 60], [60, 80], [80, 100]]
         response = ""
-        for y in range(ranges[int(section)][0], ranges[int(section)][1]):
+        for y in range(100):
             for x in range(100):
                 response = response + str(chars[pixels[x][y]])
             response = response
@@ -75,13 +74,22 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
             data = data_raw.split("_")
-            pixels[int(data[0])][int(data[1])] = int(data[2])
-
+            print(data)
+            if data[0] == 'fill':
+                print("filling")
+                for y in range(100):
+                    for x in range(100):
+                        pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
+            else:
+                pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+                print(pixels[int(data[0])][int(data[1])])
             #print('updated')  # yeah that works
             #print(pixels[int(data[0])][int(data[1])])
-            return 'POST request received'
+            return "gut"
         except:
+            print("failed")
             return 'failed'
+
 
 
 if __name__ == '__main__':
