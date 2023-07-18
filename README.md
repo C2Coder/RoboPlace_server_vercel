@@ -1,4 +1,6 @@
-## Demo
+## RoboPlace server
+
+more info at https://github.com/C2Coder/RoboPlace_client
 
 https://flask-python-template.vercel.app/
 
