@@ -72,6 +72,7 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
             data = data_raw.split("_")
+            data[2] = data[2].replace(" ", "")
             return data
             # if data[0] == 'fill':
             #     print("filling")
