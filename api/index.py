@@ -28,7 +28,7 @@ hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', 
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
 
 cur = conn.cursor()
-cur.execute("SELECT color FROM pixels ORDER BY id")
+cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
 sql_colors = cur.fetchall()
 for y in range(100):
     for x in range(100):
@@ -63,7 +63,7 @@ def handle_request():
 
 @app.route('/post', methods=['POST'])
 def handle_incoming():
-    global pixels
+    global pixels, cur, conn
     if request.method == 'POST':
         # Handle POST request
         try:
@@ -87,6 +87,11 @@ def handle_incoming():
 
             #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
+
+            cur = conn.cursor()
+            cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
+            sql_colors = cur.fetchall()
+            return sql_colors
             try:
                 cur.execute("UPDATE pixels SET color = " + colors[pixels[int(data[0])][int(data[1])]]+ " WHERE id = " + str((int(data[1])*100)+int(data[0])))
                 conn.commit()
