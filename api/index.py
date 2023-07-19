@@ -29,10 +29,10 @@ hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', 
 
 cur = conn.cursor()
 cur.execute("SELECT color FROM pixels ORDER BY id")
-colors = cur.fetchall()
+sql_colors = cur.fetchall()
 for y in range(100):
     for x in range(100):
-        pixels[x][y] = chars.index(colors[(y*100)+x][0])
+        pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
 #print(pixels)
 
 
