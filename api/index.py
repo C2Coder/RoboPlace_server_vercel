@@ -88,7 +88,7 @@ def handle_incoming():
             #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
             try:
-                cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
+                cur.execute("UPDATE pixels SET color = " + colors[pixels[int(data[0])][int(data[1])]]+ " WHERE id = " + str((int(data[1])*100)+int(data[0])))
                 conn.commit()
             except Exception:
                 return "sql failed"
