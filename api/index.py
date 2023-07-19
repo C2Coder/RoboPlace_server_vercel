@@ -81,8 +81,6 @@ def handle_incoming():
             #             pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
             # else:
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
-            #     print(pixels[int(data[0])][int(data[1])])
-
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
