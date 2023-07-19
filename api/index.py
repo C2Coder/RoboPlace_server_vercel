@@ -6,15 +6,15 @@ import pickle
 from threading import Thread
 import time
 import os
-
-import psycopg2
-
-conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
-                        host=os.environ.get("POSTGRES_HOST"),
-                        user=os.environ.get("POSTGRES_USER"),
-                        password=os.environ.get("POSTGRES_PASSWORD"),
-                        port=5432)
-
+#
+#import psycopg2
+#
+#conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
+#                        host=os.environ.get("POSTGRES_HOST"),
+#                        user=os.environ.get("POSTGRES_USER"),
+#                        password=os.environ.get("POSTGRES_PASSWORD"),
+#                        port=5432)
+#
 
 pixels = [[0 for i in range(100)] for j in range(100)]
 
@@ -26,13 +26,13 @@ colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
 
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
-
-cur = conn.cursor()
-cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
-sql_colors = cur.fetchall()
-for y in range(100):
-    for x in range(100):
-        pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
+#
+#cur = conn.cursor()
+#cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
+#sql_colors = cur.fetchall()
+#for y in range(100):
+#    for x in range(100):
+#        pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
 #print(pixels)
 
 
@@ -63,7 +63,7 @@ def handle_request():
 
 @app.route('/post', methods=['POST'])
 def handle_incoming():
-    global pixels, cur, conn
+    global pixels
     if request.method == 'POST':
         # Handle POST request
         try:
@@ -72,22 +72,22 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
             data = data_raw.split("_")
-            data[2] = data[2].replace(" ", "")
+            #data[2] = data[2].replace(" ", "")
             # if data[0] == 'fill':
             #     print("filling")
             #     for y in range(100):
             #         for x in range(100):
             #             pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
             # else:
-            #     pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
             #     print(pixels[int(data[0])][int(data[1])])
 
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
             #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
-            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
-            return str(pixels[int(data[0])][int(data[1])]) + "color"
+            #pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
+            #return str(pixels[int(data[0])][int(data[1])]) + "color"
             #cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 10")
             #conn.commit()
             #sql_colors = cur.fetchall()
