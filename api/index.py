@@ -88,7 +88,6 @@ def handle_incoming():
             #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
 
-            cur = conn.cursor()
             cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
             sql_colors = cur.fetchall()
             return sql_colors
