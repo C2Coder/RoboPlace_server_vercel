@@ -6,15 +6,15 @@ import pickle
 from threading import Thread
 import time
 import os
-#
-#import psycopg2
-#
-#conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
-#                        host=os.environ.get("POSTGRES_HOST"),
-#                        user=os.environ.get("POSTGRES_USER"),
-#                        password=os.environ.get("POSTGRES_PASSWORD"),
-#                        port=5432)
-#
+
+import psycopg2
+
+conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
+                        host=os.environ.get("POSTGRES_HOST"),
+                        user=os.environ.get("POSTGRES_USER"),
+                        password=os.environ.get("POSTGRES_PASSWORD"),
+                        port=5432)
+
 
 pixels = [[0 for i in range(100)] for j in range(100)]
 
@@ -26,15 +26,16 @@ colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
 
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
-#
-#cur = conn.cursor()
-#cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
-#sql_colors = cur.fetchall()
-#for y in range(100):
-#    for x in range(100):
-#        pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
-#print(pixels)
 
+cur = conn.cursor()
+cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
+sql_colors = cur.fetchall()
+for y in range(100):
+    for x in range(100):
+        pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
+#print(pixels)
+cur.close()
+conn.close()
 
 app = Flask(__name__)
 CORS(app)
