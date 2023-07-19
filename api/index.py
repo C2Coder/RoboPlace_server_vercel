@@ -93,11 +93,20 @@ def handle_incoming():
             #conn.commit()
             #sql_colors = cur.fetchall()
             #return sql_colors
-            #try:
-            #    cur.execute("UPDATE pixels SET color = " + colors[pixels[int(data[0])][int(data[1])]]+ " WHERE id = " + str((int(data[1])*100)+int(data[0])))
-            #    conn.commit()
-            #except Exception:
-            #    return "sql failed"
+
+            try:
+                conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
+                        host=os.environ.get("POSTGRES_HOST"),
+                        user=os.environ.get("POSTGRES_USER"),
+                        password=os.environ.get("POSTGRES_PASSWORD"),
+                        port=5432)
+                cur = conn.cursor()
+                cur.execute("UPDATE pixels SET color = " + colors[pixels[int(data[0])][int(data[1])]]+ " WHERE id = " + str((int(data[1])*100)+int(data[0])))
+                conn.commit()
+                cur.close()
+                conn.close()
+            except Exception:
+                return "sql failed"
             return "gut"
         except:
             print("failed")
