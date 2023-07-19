@@ -73,7 +73,6 @@ def handle_incoming():
             #print(data_raw)
             data = data_raw.split("_")
             data[2] = data[2].replace(" ", "")
-            return data
             # if data[0] == 'fill':
             #     print("filling")
             #     for y in range(100):
