@@ -72,7 +72,6 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
             data = data_raw.split("_")
-            return data
             # if data[0] == 'fill':
             #     print("filling")
             #     for y in range(100):
@@ -86,12 +85,8 @@ def handle_incoming():
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+            return pixels[int(data[0])][int(data[1])]
             try:
-                print(pixels[int(data[0])][int(data[1])])
-            except Exception:
-                return "print failed"
-            try:
-
                 cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
                 conn.commit()
             except Exception:
