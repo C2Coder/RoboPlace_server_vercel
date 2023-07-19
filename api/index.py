@@ -7,18 +7,34 @@ from threading import Thread
 import time
 import os
 
+import psycopg2
+
+conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
+                        host=os.environ.get("POSTGRES_HOST"),
+                        user=os.environ.get("POSTGRES_USER"),
+                        password=os.environ.get("POSTGRES_PASSWORD"),
+                        port=5432)
+
 
 pixels = [[0 for i in range(100)] for j in range(100)]
 
 chars = ["a", "b", "c", "d", "e", "f", "g", "h",
          "i", "j", "k", "l", "m", "n", "o", "p",]
 
-
 colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
           'brown', 'yellow', 'lime', 'green', 'cyan', 'lblue', 'blue', 'mauve', 'purple']
 
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
+
+cur = conn.cursor()
+cur.execute("SELECT color FROM pixels ORDER BY id")
+colors = cur.fetchall()
+for y in range(100):
+    for x in range(100):
+        pixels[x][y] = chars.index(colors[(y*100)+x][0])
+#print(pixels)
+
 
 app = Flask(__name__)
 CORS(app)
@@ -57,16 +73,23 @@ def handle_incoming():
             #print(data_raw)
             data = data_raw.split("_")
             print(data)
-            if data[0] == 'fill':
-                print("filling")
-                for y in range(100):
-                    for x in range(100):
-                        pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
-            else:
-                pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
-                print(pixels[int(data[0])][int(data[1])])
-            #print('updated')  # yeah that works
-            #print(pixels[int(data[0])][int(data[1])])
+            # if data[0] == 'fill':
+            #     print("filling")
+            #     for y in range(100):
+            #         for x in range(100):
+            #             pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
+            # else:
+            #     pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+            #     print(pixels[int(data[0])][int(data[1])])
+
+
+            # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
+
+            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+            print(pixels[int(data[0])][int(data[1])])
+            cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
+            conn.commit()
+
             return "gut"
         except:
             print("failed")
