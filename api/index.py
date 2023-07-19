@@ -19,7 +19,7 @@ conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
 pixels = [[0 for i in range(100)] for j in range(100)]
 
 chars = ["a", "b", "c", "d", "e", "f", "g", "h",
-         "i", "j", "k", "l", "m", "n", "o", "p",]
+         "i", "j", "k", "l", "m", "n", "o", "p"]
 
 colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
           'brown', 'yellow', 'lime', 'green', 'cyan', 'lblue', 'blue', 'mauve', 'purple']
@@ -85,7 +85,7 @@ def handle_incoming():
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
             #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
-            data[2] = 'red'
+            data[2] = 'white'
             return colors.index(data[2])
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
             try:
