@@ -87,9 +87,12 @@ def handle_incoming():
 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
             print(pixels[int(data[0])][int(data[1])])
-            cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
-            conn.commit()
+            try:
 
+                cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
+                conn.commit()
+            except:
+                return "sql failed"
             return "gut"
         except:
             print("failed")
