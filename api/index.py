@@ -86,12 +86,15 @@ def handle_incoming():
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
-            print(pixels[int(data[0])][int(data[1])])
+            try:
+                print(pixels[int(data[0])][int(data[1])])
+            except Exception:
+                return "print failed"
             try:
 
                 cur.execute("UPDATE pixels SET color = " + colors[pixels[x][y]]+ " WHERE id = " + str((y*100)+x))
                 conn.commit()
-            except:
+            except Exception:
                 return "sql failed"
             return "gut"
         except:
