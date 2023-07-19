@@ -28,7 +28,7 @@ hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', 
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
 
 cur = conn.cursor()
-cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 100")
+cur.execute("SELECT color FROM pixels ORDER BY id")
 sql_colors = cur.fetchall()
 for y in range(100):
     for x in range(100):
