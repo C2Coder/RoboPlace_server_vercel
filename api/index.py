@@ -68,7 +68,7 @@ def handle_incoming():
     if request.method == 'POST':
         # Handle POST request
         try:
-            data_in = str(request.get_data())
+            data_in = str(request.get_json())
             #print(data_in)
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
