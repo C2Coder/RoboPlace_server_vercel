@@ -69,10 +69,10 @@ def handle_incoming():
         # Handle POST request
         try:
             data_in = str(request.get_data())
-            return data_in
             #print(data_in)
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
+            return data_raw
             data = data_raw.split("_")
             #data[2] = data[2].replace(" ", "")
             # if data[0] == 'fill':
