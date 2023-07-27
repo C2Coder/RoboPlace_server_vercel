@@ -2,9 +2,6 @@
 
 from flask import Flask, request
 from flask_cors import CORS
-import pickle
-from threading import Thread
-import time
 import os
 
 import psycopg2
@@ -73,26 +70,10 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
             #print(data_raw)
             data = data_raw.split("_")
-            #data[2] = data[2].replace(" ", "")
-            # if data[0] == 'fill':
-            #     print("filling")
-            #     for y in range(100):
-            #         for x in range(100):
-            #             pixels[x][y] = int(colors.index(data[1].replace(" ", "")))
-            # else:
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
-
-            #return str(pixels[int(data[0])][int(data[1])]) + ", " + data[2] 
-            #pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
-            #return str(pixels[int(data[0])][int(data[1])]) + "color"
-            #cur.execute("SELECT color FROM pixels ORDER BY id LIMIT 10")
-            #conn.commit()
-            #sql_colors = cur.fetchall()
-            #return sql_colors
-
-            
+ 
             #conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
             #        host=os.environ.get("POSTGRES_HOST"),
             #        user=os.environ.get("POSTGRES_USER"),
@@ -103,9 +84,8 @@ def handle_incoming():
             #conn.commit()
             #cur.close()
             #conn.close()
-            return "gut"
+            return "gut" # idk why, but this was the first thing that came to mind
         except:
-            print("failed")
             return 'failed'
 
 
