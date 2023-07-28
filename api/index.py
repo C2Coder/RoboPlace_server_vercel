@@ -94,7 +94,6 @@ def handle_incoming():
 
             new_color = chars[int(colors.index(data[2]))]
             id_value = str(int(data[1])*100+int(data[0]))
-            return new_color + ", " + id_value
             try:
                 cur = conn.cursor()
             except:
