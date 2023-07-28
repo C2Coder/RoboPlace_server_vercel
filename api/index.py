@@ -26,8 +26,8 @@ pixels = [[0 for i in range(100)] for j in range(100)]
 chars = ["a", "b", "c", "d", "e", "f", "g", "h",
          "i", "j", "k", "l", "m", "n", "o", "p"]
 
-colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
-          'brown', 'yellow', 'lime', 'green', 'cyan', 'lblue', 'blue', 'mauve', 'purple']
+colors = ["white", "platinum", "grey", "black", "pink", "red", "orange",
+          "brown", "yellow", "lime", "green", "cyan", "lblue", "blue", "mauve", "purple"]
 
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
@@ -85,15 +85,15 @@ def handle_incoming():
         try:
             data_in = str(request.get_json()).removeprefix("b")
             #print(data_in)
-            data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_")
+            data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_").replace(" ", "")
             #print(data_raw)
             data = data_raw.split("_")
-            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
+            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
-            return data
-            new_color = chars[colors.index(data[2])]
+            new_color = chars[int(colors.index(data[2]))]
+            return new_color
             id_value = str(int(data[1])*100+int(data[0]))
             return new_color + ", " + id_value
             try:
