@@ -93,7 +93,6 @@ def handle_incoming():
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
             new_color = chars[int(colors.index(data[2]))]
-            return new_color
             id_value = str(int(data[1])*100+int(data[0]))
             return new_color + ", " + id_value
             try:
