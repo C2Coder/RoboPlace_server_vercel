@@ -13,6 +13,14 @@ conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
                         port=5432)
 
 
+update_query = """
+    UPDATE pixels
+    SET color = %s
+    WHERE id = %s;
+"""
+
+
+
 pixels = [[0 for i in range(100)] for j in range(100)]
 
 chars = ["a", "b", "c", "d", "e", "f", "g", "h",
@@ -24,6 +32,12 @@ colors = ['white', 'platinum', 'grey', 'black', 'pink', 'red', 'orange',
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
 
+
+
+
+
+
+
 cur = conn.cursor()
 cur.execute("SELECT color FROM pixels ORDER BY id")
 sql_colors = cur.fetchall()
@@ -32,7 +46,11 @@ for y in range(100):
         pixels[x][y] = chars.index(sql_colors[(y*100)+x][0])
 #print(pixels)
 cur.close()
-conn.close()
+#conn.close() # Do not close the connection, but close the cursor
+
+
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -73,20 +91,30 @@ def handle_incoming():
             pixels[int(data[0])][int(data[1])] = int(colors.index(data[2].replace(" ", "")))
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
- 
-            #conn = psycopg2.connect(database=os.environ.get("POSTGRES_DATABASE"),
-            #        host=os.environ.get("POSTGRES_HOST"),
-            #        user=os.environ.get("POSTGRES_USER"),
-            #        password=os.environ.get("POSTGRES_PASSWORD"),
-            #        port=5432)
-            #cur = conn.cursor()
-            #cur.execute("UPDATE pixels SET color = " + colors[pixels[int(data[0])][int(data[1])]]+ " WHERE id = " + str((int(data[1])*100)+int(data[0])))
-            #conn.commit()
-            #cur.close()
-            #conn.close()
+
+            new_color = "p"
+            id_value = "0"
+            try:
+                cur = conn.cursor()
+            except:
+                return "Cursor failed"
+            
+            try:
+                cur.execute(update_query, (new_color, id_value))
+            except:
+                return "Execute failed"
+            try:
+                conn.commit()
+            except:
+                return "Commit failed"
+            try:
+                cur.close()
+            except:
+                return "Cur close failed"
+            
             return "gut" # idk why, but this was the first thing that came to mind
         except:
-            return 'failed'
+            return "failed"
 
 
 
