@@ -92,8 +92,10 @@ def handle_incoming():
 
             # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
-            new_color = "p"
-            id_value = "0"
+
+            new_color = chars[colors.index(data[2])]
+            id_value = str(data[1]*100+data[0])
+
             try:
                 cur = conn.cursor()
             except:
@@ -103,10 +105,12 @@ def handle_incoming():
                 cur.execute(update_query, (new_color, id_value))
             except:
                 return "Execute failed"
+            
             try:
                 conn.commit()
             except:
                 return "Commit failed"
+            
             try:
                 cur.close()
             except:
