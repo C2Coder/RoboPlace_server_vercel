@@ -95,8 +95,8 @@ def handle_incoming():
                 for y in range(99):
                     for x in range(99):
                         pixels[x][y] = int(colors.index(data[1]))
-                return data[1]
                 cur = conn.cursor()
+                return data[1]
                 cur.execute("UPDATE pixels SET color = '"+ data[1] +"';")
                 conn.commit()
                 cur.close()
