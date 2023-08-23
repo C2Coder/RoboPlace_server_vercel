@@ -89,33 +89,34 @@ def handle_incoming():
             data_raw = data_in.replace("{", "").replace("}", "").replace("'", "").replace(":", "_").replace(" ", "")
             #print(data_raw)
             data = data_raw.split("_")
-            pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
-
-            # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
-
-            new_color = chars[int(colors.index(data[2]))]
-            id_value = str(int(data[1])*100+int(data[0]))
-            try:
+            if data[0] == "fill":
+                if not data[1] in colors:
+                    return "wrong color"
+                for y in range(99):
+                    for x in range(99):
+                        pixels[x][y] = int(colors.index(data[1]))
+                
                 cur = conn.cursor()
-            except:
-                error_msg += "Cursor fail"
-            
-            try:
-                cur.execute(update_query, (new_color, id_value))
-            except:
-                error_msg +=  "Execute failed"
-            
-            try:
+                cur.execute("UPDATE pixels SET color = '"+ data[1] +"';")
                 conn.commit()
-            except:
-                error_msg +=  "Commit failed"
-            
-            try:
                 cur.close()
-            except:
-                error_msg +=  "Cur close failed"
-            
-            return "gut" # idk why, but this was the first thing that came to mind
+
+            else:
+                if not data[2] in colors:
+                        return "wrong color"
+                pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
+
+                # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
+
+                new_color = chars[int(colors.index(data[2]))]
+                id_value = str(int(data[1])*100+int(data[0]))
+                cur = conn.cursor()
+                cur.execute(update_query, (new_color, id_value))
+
+                conn.commit()
+                cur.close()
+
+                return "gut" # idk why, but this was the first thing that came to mind
         except:
             return "failed"
 
