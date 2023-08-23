@@ -32,7 +32,7 @@ colors = ["white", "platinum", "grey", "black", "pink", "red", "orange",
 hex_colors = ['#FFFFFF', '#E4E4E4', '#888888', '#222222', '#FFA7D1', '#E50000', '#E59500',
               '#A06A42', '#E5D900', '#94E044', '#02BE01', '#00D3DD', '#0083C7', '#0000EA', '#CF6EE4', '#820080']
 
-
+error_msg = ""
 
 
 
@@ -49,9 +49,6 @@ cur.close()
 #conn.close() # Do not close the connection, but close the cursor
 
 
-
-
-
 app = Flask(__name__)
 CORS(app)
 
@@ -62,6 +59,10 @@ def main_page_response():
     with open("index.htm") as index_file:
         return index_file.read()
 
+
+@app.route('/error', methods=['GET'])
+def error_response():
+    return error_msg
 
 # request handlers
 
@@ -79,7 +80,7 @@ def handle_request():
 
 @app.route('/post', methods=['POST'])
 def handle_incoming():
-    global pixels
+    global pixels, error_msg
     if request.method == 'POST':
         # Handle POST request
         try:
@@ -97,22 +98,22 @@ def handle_incoming():
             try:
                 cur = conn.cursor()
             except:
-                return "Cursor failed"
+                error_msg += "Cursor fail"
             
             try:
                 cur.execute(update_query, (new_color, id_value))
             except:
-                return "Execute failed"
+                error_msg +=  "Execute failed"
             
             try:
                 conn.commit()
             except:
-                return "Commit failed"
+                error_msg +=  "Commit failed"
             
             try:
                 cur.close()
             except:
-                return "Cur close failed"
+                error_msg +=  "Cur close failed"
             
             return "gut" # idk why, but this was the first thing that came to mind
         except:
