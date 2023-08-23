@@ -101,7 +101,7 @@ def handle_incoming():
                     for x in range(100):
                         pixels[x][y] = int(colors.index(data[1]))
                 cur = conn.cursor()
-                cur.execute(update_fill_query, (str(data[1])))
+                cur.execute(update_fill_query, (chars[int(colors.index(data[1]))]))
                 conn.commit()
                 cur.close()
                 return data[1]
