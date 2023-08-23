@@ -19,6 +19,11 @@ update_query = """
     WHERE id = %s;
 """
 
+update_fill_query = """
+    UPDATE pixels
+    SET color = %s;
+"""
+
 
 
 pixels = [[0 for i in range(100)] for j in range(100)]
@@ -96,7 +101,7 @@ def handle_incoming():
                     for x in range(100):
                         pixels[x][y] = int(colors.index(data[1]))
                 cur = conn.cursor()
-                cur.execute("UPDATE pixels SET color = "+ data[1])
+                cur.execute(update_query, (str(data[1])))
                 conn.commit()
                 cur.close()
                 return data[1]
@@ -116,7 +121,7 @@ def handle_incoming():
                 conn.commit()
                 cur.close()
 
-                return "gut" # idk why, but this was the first thing that came to mind
+            return "gut" # idk why, but this was the first thing that came to mind
         except:
             return "failed"
 
