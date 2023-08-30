@@ -115,8 +115,6 @@ def handle_incoming():
                     return "wrong color"
                 
                 pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
-                
-                return str(data)
 
                 # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
@@ -124,7 +122,6 @@ def handle_incoming():
                 id_value = str(int(data[1])*100+int(data[0]))
                 cur = conn.cursor()
                 cur.execute(update_query, (new_color, id_value))
-
                 conn.commit()
                 cur.close()
 
