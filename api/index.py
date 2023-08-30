@@ -112,8 +112,9 @@ def handle_incoming():
 
             else:
                 if not data[2] in colors:
-                        return "wrong color"
-                return int(colors.index(data[2]))
+                    return "wrong color"
+                
+                return "index is " + str(colors.index(data[2]))
                 pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
                 
 
