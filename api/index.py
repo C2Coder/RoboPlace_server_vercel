@@ -114,9 +114,9 @@ def handle_incoming():
                 if not data[2] in colors:
                     return "wrong color"
                 
-                return "index is " + str(colors.index(data[2]))
                 pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
                 
+                return str(data)
 
                 # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
