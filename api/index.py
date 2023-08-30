@@ -115,7 +115,7 @@ def handle_incoming():
                     return "wrong color"
                 
                 pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
-
+                return "color = " + str(colors.index(data[2]))
                 # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
                 new_color = chars[int(colors.index(data[2]))]
@@ -128,7 +128,6 @@ def handle_incoming():
             return "gut" # idk why, but this was the first thing that came to mind
         except:
             return "failed"
-
 
 
 if __name__ == '__main__':
