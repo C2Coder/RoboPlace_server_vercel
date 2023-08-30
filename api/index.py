@@ -97,19 +97,25 @@ def handle_incoming():
             if data[0] == "fill":
                 if not data[1] in colors:
                     return "wrong color"
+                
+                
                 for y in range(100):
                     for x in range(100):
                         pixels[x][y] = int(colors.index(data[1]))
+                
+                
                 cur = conn.cursor()
                 cur.execute(update_fill_query, (chars[int(colors.index(data[1]))]))
                 conn.commit()
                 cur.close()
-                return data[1]
+                return "gut"
 
             else:
                 if not data[2] in colors:
                         return "wrong color"
+                return int(colors.index(data[2]))
                 pixels[int(data[0])][int(data[1])] = int(colors.index(data[2]))
+                
 
                 # how these lines feel -> https://discord.com/assets/633e893d2577bb3de002991aa00bc3b0.svg
 
