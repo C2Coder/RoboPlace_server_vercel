@@ -1,6 +1,6 @@
 ## RoboPlace server
 
-more info at https://github.com/C2Coder/RoboPlace_client
+more info at https://github.com/C2Coder/RoboPlace
 
 https://roboplace.vercel.app
 ## How it Works
